@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,17 +10,20 @@ import { Label } from "@/components/ui/label";
 import { Send } from "lucide-react";
 
 const prompts = [
-  "🤖 Create AI-powered social media content",
-  "🛡️ Smart content moderation for your platform",
-  "🎯 Generate personalized recommendations",
-  "📄 Summarize documents instantly",
-  "📧 Automate email responses",
-  "📊 Analyze data in real-time",
-  "🔍 Extract insights from text",
-  "🌐 Translate content automatically"
+  "🤖 AirBnb Local Guide",
+  "🛡️ Market Report",
+  "🎯 Business Plan",
+  "📄 Summarize Email",
+  "📧 Real Estate Agent",
+  "📊 Competitor Benchmarking",
+  "🔍 Emerging Technologies",
+  "🌐 Investment Opportunity Evaluation",
+  "👩‍💼 SWOT Analysis",
+  "🔍 Product Feature Comparison",
 ];
 
 export function Hero() {
+  const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState("");
   const [formData, setFormData] = useState({
@@ -42,12 +46,103 @@ export function Hero() {
   };
 
   const handlePromptClick = (prompt: string) => {
-    setSelectedPrompt(prompt);
-    setIsDialogOpen(true);
+    // Create a URL-friendly version of the prompt
+    const promptId = encodeURIComponent(prompt.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase());
+    router.push(`/prompt/${promptId}`);
   };
 
   return (
-    <section className="min-h-[85vh] flex items-center justify-center bg-white">
+    <section className="min-h-[85vh] flex items-center justify-center relative bg-white overflow-hidden">
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px)',
+          backgroundSize: '20px 20px'
+        }}
+      />
+      {/* Sparkles container */}
+      <div className="absolute inset-0">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-twinkle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: '2px',
+              height: '2px',
+              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+              boxShadow: '0 0 4px 1px rgba(255, 255, 255, 0.7)',
+              borderRadius: '50%',
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-32"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, white)'
+        }}
+      />
+      <style jsx>{`
+        @keyframes twinkle {
+          0%, 100% {
+            opacity: 0.2;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+        .animate-twinkle {
+          animation: twinkle 3s ease-in-out infinite;
+        }
+        .marquee-rtl {
+          display: flex;
+          animation: scroll-rtl 15s linear infinite;
+          white-space: nowrap;
+          will-change: transform;
+        }
+
+        .marquee-ltr {
+          display: flex;
+          animation: scroll-ltr 12s linear infinite;
+          white-space: nowrap;
+          will-change: transform;
+        }
+
+        @keyframes scroll-rtl {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes scroll-ltr {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+
+        .marquee-container {
+          overflow: hidden;
+          mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+
+        .marquee-rtl:hover,
+        .marquee-ltr:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-[500px] p-6">
           <div className="flex justify-between items-start">
@@ -102,14 +197,25 @@ export function Hero() {
         </DialogContent>
       </Dialog>
 
-      <div className="container max-w-4xl mx-auto px-4 py-8 md:py-12">
-        <h1 className="text-5xl md:text-6xl lg:text-6xl font-bold mb-8 text-black text-center whitespace-nowrap leading-none">
-          Connect With Us Instantly
+      <div className="container relative max-w-4xl mx-auto px-4 py-8 md:py-12 z-10">
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-50 border border-green-200 gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-sm font-medium text-green-800">Now Live</span>
+          </div>
+        </div>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-black text-center tracking-tight">
+          Meet Clora
+          <span className="block text-2xl md:text-3xl lg:text-4xl mt-4 font-light text-gray-600">
+            World's First Email-Use Agent
+          </span>
         </h1>
         
-        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-12 text-center">
-          Simple, efficient communication with our team through dynamic prompts. 
-          Get the answers you need without the hassle.
+        <p className="text-lg md:text-xl text-black max-w-2xl mx-auto mb-8 text-center leading-relaxed font-light">
+        Your Remote Agent for daily tasks available 24/7 over email
         </p>
 
         <div className="space-y-2">
