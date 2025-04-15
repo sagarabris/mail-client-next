@@ -71,7 +71,7 @@ export default function PromptDemo({ params }: { params: { id: string } }) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-8">Processing Your Request</h1>
+        <h1 className="text-3xl font-bold text-center mb-8 text-black">Processing Your Request</h1>
         
         <div className="relative h-64 mb-8">
           <AnimatePresence mode="wait">
@@ -141,7 +141,7 @@ export default function PromptDemo({ params }: { params: { id: string } }) {
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full">
-                  <h2 className="text-xl font-semibold mb-4">Response from Clora</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-black">Response from Clora</h2>
                   <p className="text-gray-700">{response}</p>
                 </div>
               </motion.div>
